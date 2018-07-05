@@ -30,7 +30,7 @@ module.exports = function makeWebpackConfig() {
    * Karma will set this when it's a test build
    */
   config.entry = isTest ? void 0 : {
-    app: './src/app/app.js'
+    app: './src/app/app.ts'
   };
 
   config.mode = isProd ? 'production' : 'development';
@@ -81,6 +81,22 @@ module.exports = function makeWebpackConfig() {
   // Initialize module
   config.module = {
     rules: [{
+      test: /\.ts$/,
+      exclude: /node_modules/,
+      use: {
+        loader: 'tslint-loader',
+        options: {
+          emitErrors: true
+        }
+      },
+      enforce: 'pre'
+    }, {
+      test: /\.ts$/,
+      exclude: [/node_modules/],
+      use: [
+        'awesome-typescript-loader'
+      ]
+    }, {
       // JS LOADER
       // Reference: https://github.com/babel/babel-loader
       // Transpile .js files using babel-loader

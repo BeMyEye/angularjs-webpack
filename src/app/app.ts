@@ -1,18 +1,21 @@
-import angular from 'angular';
+import * as angular from 'angular';
 
 import '../style/app.css';
 
-let app = () => {
+const app = () => {
   return {
     template: require('./app.html'),
     controller: 'AppCtrl',
     controllerAs: 'app'
-  }
+  };
 };
 
 class AppCtrl {
+
+  url = 'https://github.com/preboot/angular-webpack';
+
   constructor() {
-    this.url = 'https://github.com/preboot/angular-webpack';
+    //
   }
 }
 
