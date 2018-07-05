@@ -33,6 +33,8 @@ module.exports = function makeWebpackConfig() {
     app: './src/app/app.js'
   };
 
+  config.mode = isProd ? 'production' : 'development';
+
   /**
    * Output
    * Reference: http://webpack.github.io/docs/configuration.html#output
@@ -63,11 +65,9 @@ module.exports = function makeWebpackConfig() {
    */
   if (isTest) {
     config.devtool = 'inline-source-map';
-  }
-  else if (isProd) {
+  } else if (isProd) {
     config.devtool = 'source-map';
-  }
-  else {
+  } else {
     config.devtool = 'eval-source-map';
   }
 
@@ -86,7 +86,7 @@ module.exports = function makeWebpackConfig() {
       // Transpile .js files using babel-loader
       // Compiles ES6 and ES7 into ES5 code
       test: /\.js$/,
-      loader: 'babel-loader',
+      use: 'babel-loader',
       exclude: /node_modules/
     }, {
       // CSS LOADER
@@ -102,11 +102,17 @@ module.exports = function makeWebpackConfig() {
       // Reference: https://github.com/webpack/style-loader
       // Use style-loader in development.
 
-      loader: isTest ? 'null-loader' : ExtractTextPlugin.extract({
-        fallbackLoader: 'style-loader',
-        loader: [
-          {loader: 'css-loader', query: {sourceMap: true}},
-          {loader: 'postcss-loader'}
+      use: isTest ? 'null-loader' : ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        use: [{
+            loader: 'css-loader',
+            query: {
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'postcss-loader'
+          }
         ],
       })
     }, {
@@ -117,13 +123,13 @@ module.exports = function makeWebpackConfig() {
       // Pass along the updated reference to your code
       // You can add here any file extension you want to get copied to your output
       test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$/,
-      loader: 'file-loader'
+      use: 'file-loader'
     }, {
       // HTML LOADER
       // Reference: https://github.com/webpack/raw-loader
       // Allow loading html through js
       test: /\.html$/,
-      loader: 'raw-loader'
+      use: 'html-loader'
     }]
   };
 
@@ -151,8 +157,8 @@ module.exports = function makeWebpackConfig() {
    * Reference: https://github.com/postcss/autoprefixer-core
    * Add vendor prefixes to your css
    */
-   // NOTE: This is now handled in the `postcss.config.js`
-   //       webpack2 has some issues, making the config file necessary
+  // NOTE: This is now handled in the `postcss.config.js`
+  //       webpack2 has some issues, making the config file necessary
 
   /**
    * Plugins
@@ -183,7 +189,11 @@ module.exports = function makeWebpackConfig() {
       // Reference: https://github.com/webpack/extract-text-webpack-plugin
       // Extract css files
       // Disabled when in test mode or not in build mode
-      new ExtractTextPlugin({filename: 'css/[name].css', disable: !isProd, allChunks: true})
+      new ExtractTextPlugin({
+        filename: 'css/[name].css',
+        disable: !isProd,
+        allChunks: true
+      })
     )
   }
 
