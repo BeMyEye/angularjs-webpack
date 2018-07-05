@@ -1,4 +1,5 @@
 import * as angular from 'angular';
+import './polyfills';
 
 import '../style/app.css';
 
