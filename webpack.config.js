@@ -80,7 +80,9 @@ module.exports = function makeWebpackConfig() {
 
   // Initialize module
   config.module = {
-    rules: [{
+    rules: [
+      // TS LOADER
+      {
       test: /\.ts$/,
       exclude: /node_modules/,
       use: {
@@ -96,21 +98,32 @@ module.exports = function makeWebpackConfig() {
       use: [
         'awesome-typescript-loader'
       ]
-    }, {
+      },
       // JS LOADER
       // Reference: https://github.com/babel/babel-loader
       // Transpile .js files using babel-loader
       // Compiles ES6 and ES7 into ES5 code
+      {
       test: /\.js$/,
       use: 'babel-loader',
       exclude: /node_modules/
-    }, {
+      },
+      // SCSS LOADER
+      {
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader'],
+          publicPath: '../'
+        }),
+      },
       // CSS LOADER
       // Reference: https://github.com/webpack/css-loader
       // Allow loading css through js
       //
       // Reference: https://github.com/postcss/postcss-loader
       // Postprocess your css with PostCSS plugins
+      {
       test: /\.css$/,
       // Reference: https://github.com/webpack/extract-text-webpack-plugin
       // Extract css files in production builds
@@ -131,22 +144,30 @@ module.exports = function makeWebpackConfig() {
           }
         ],
       })
-    }, {
+      },
       // ASSET LOADER
       // Reference: https://github.com/webpack/file-loader
       // Copy png, jpg, jpeg, gif, svg, woff, woff2, ttf, eot files to output
       // Rename the file using the asset hash
       // Pass along the updated reference to your code
       // You can add here any file extension you want to get copied to your output
-      test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$/,
+      {
+        test: /\.(png|jpg|jpeg|gif|woff|woff2|ttf|eot)$/,
       use: 'file-loader'
-    }, {
+      },
+      // SVG LOADER
+      {
+        test: /\.svg$/,
+        loader: 'svg-url-loader'
+      },
       // HTML LOADER
       // Reference: https://github.com/webpack/raw-loader
       // Allow loading html through js
+      {
       test: /\.html$/,
       use: 'html-loader'
-    }]
+      }
+    ]
   };
 
   // ISTANBUL LOADER
