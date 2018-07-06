@@ -1,5 +1,5 @@
 // Reference: http://karma-runner.github.io/0.12/config/configuration-file.html
-module.exports = function karmaConfig (config) {
+module.exports = function karmaConfig(config) {
   config.set({
     frameworks: [
       // Reference: https://github.com/karma-runner/karma-jasmine
@@ -26,7 +26,7 @@ module.exports = function karmaConfig (config) {
       // Reference: http://webpack.github.io/docs/testing.html
       // Reference: https://github.com/webpack/karma-webpack
       // Convert files with webpack and load sourcemaps
-      'src/tests.webpack.js': ['webpack', 'sourcemap']
+      'src/tests.webpack.ts': ['webpack', 'sourcemap']
     },
 
     browsers: [
@@ -39,9 +39,12 @@ module.exports = function karmaConfig (config) {
     // Configure code coverage reporter
     coverageReporter: {
       dir: 'coverage/',
-      reporters: [
-        {type: 'text-summary'},
-        {type: 'html'}
+      reporters: [{
+          type: 'text-summary'
+        },
+        {
+          type: 'html'
+        }
       ]
     },
 
