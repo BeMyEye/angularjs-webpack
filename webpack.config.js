@@ -99,15 +99,6 @@ module.exports = function makeWebpackConfig() {
         'awesome-typescript-loader'
       ]
       },
-      // JS LOADER
-      // Reference: https://github.com/babel/babel-loader
-      // Transpile .js files using babel-loader
-      // Compiles ES6 and ES7 into ES5 code
-      {
-      test: /\.js$/,
-      use: 'babel-loader',
-      exclude: /node_modules/
-      },
       // SCSS LOADER
       {
         test: /\.scss$/,
