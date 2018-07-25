@@ -18,3 +18,5 @@ export const moduleName =
     contactsModule
   ])
     .name;
+
+import './legacy';

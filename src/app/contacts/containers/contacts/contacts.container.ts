@@ -4,6 +4,7 @@ import { ContactsService } from '../../services/contacts.service';
  * Import the Component styles
  */
 import { IComponentOptions } from 'angular';
+import * as angular from 'angular';
 import './contacts.container.scss';
 
 class ContactsController {
@@ -32,7 +33,7 @@ class ContactsController {
   }
 }
 
-export class ContactsContainer implements IComponentOptions {
+class ContactsContainer implements IComponentOptions {
   static selector = 'contacts';
   static controller = ContactsController;
   static template = `
@@ -45,3 +46,10 @@ export class ContactsContainer implements IComponentOptions {
   </div>
   `;
 }
+
+angular.module('application.contacts')
+
+  /**
+   * Register Module Components
+   */
+  .component(ContactsContainer.selector, ContactsContainer);

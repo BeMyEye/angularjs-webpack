@@ -11,7 +11,6 @@ import { ContactList } from './components/contact-list/contact-list.component';
  * Import Module Containers
  */
 import { AddContactContainer } from './containers/add-contact/add-contact.container';
-import { ContactsContainer } from './containers/contacts/contacts.container';
 
 /**
  * Import Module Services
@@ -37,7 +36,6 @@ export const moduleName =
     /**
      * Register Module Containers
      */
-    .component(ContactsContainer.selector, ContactsContainer)
     .component(AddContactContainer.selector, AddContactContainer)
 
     /**
