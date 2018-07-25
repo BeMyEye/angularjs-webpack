@@ -25,8 +25,8 @@
   },
   "devDependencies": {
     "@types/angular": "^1.6.49",
-    "@types/angular-ui-router": "^1.1.40",
     "@types/angular-mocks": "^1.6.1",
+    "@types/angular-ui-router": "^1.1.40",
     "@types/jasmine": "^2.8.8",
     "@types/node": "^10.5.2",
     "@types/webpack-env": "^1.13.6",
