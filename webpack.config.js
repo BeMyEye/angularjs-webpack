@@ -30,7 +30,7 @@ module.exports = function makeWebpackConfig() {
    * Karma will set this when it's a test build
    */
   config.entry = isTest ? void 0 : {
-    app: './src/app/app.ts'
+    app: './src/main.ts'
   };
 
   config.mode = isProd ? 'production' : 'development';
@@ -88,21 +88,21 @@ module.exports = function makeWebpackConfig() {
     rules: [
       // TS LOADER
       {
-      test: /\.ts$/,
-      exclude: /node_modules/,
-      use: {
-        loader: 'tslint-loader',
-        options: {
-          emitErrors: true
-        }
-      },
-      enforce: 'pre'
-    }, {
-      test: /\.ts$/,
-      exclude: [/node_modules/],
-      use: [
-        'awesome-typescript-loader'
-      ]
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'tslint-loader',
+          options: {
+            emitErrors: true
+          }
+        },
+        enforce: 'pre'
+      }, {
+        test: /\.ts$/,
+        exclude: [/node_modules/],
+        use: [
+          'awesome-typescript-loader'
+        ]
       },
       // SCSS LOADER
       {
@@ -120,26 +120,26 @@ module.exports = function makeWebpackConfig() {
       // Reference: https://github.com/postcss/postcss-loader
       // Postprocess your css with PostCSS plugins
       {
-      test: /\.css$/,
-      // Reference: https://github.com/webpack/extract-text-webpack-plugin
-      // Extract css files in production builds
-      //
-      // Reference: https://github.com/webpack/style-loader
-      // Use style-loader in development.
+        test: /\.css$/,
+        // Reference: https://github.com/webpack/extract-text-webpack-plugin
+        // Extract css files in production builds
+        //
+        // Reference: https://github.com/webpack/style-loader
+        // Use style-loader in development.
 
-      use: isTest ? 'null-loader' : ExtractTextPlugin.extract({
-        fallback: 'style-loader',
-        use: [{
-            loader: 'css-loader',
-            query: {
-              sourceMap: true
+        use: isTest ? 'null-loader' : ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [{
+              loader: 'css-loader',
+              query: {
+                sourceMap: true
+              }
+            },
+            {
+              loader: 'postcss-loader'
             }
-          },
-          {
-            loader: 'postcss-loader'
-          }
-        ],
-      })
+          ],
+        })
       },
       // ASSET LOADER
       // Reference: https://github.com/webpack/file-loader
@@ -149,7 +149,7 @@ module.exports = function makeWebpackConfig() {
       // You can add here any file extension you want to get copied to your output
       {
         test: /\.(png|jpg|jpeg|gif|woff|woff2|ttf|eot)$/,
-      use: 'file-loader'
+        use: 'file-loader'
       },
       // SVG LOADER
       {
@@ -160,8 +160,8 @@ module.exports = function makeWebpackConfig() {
       // Reference: https://github.com/webpack/raw-loader
       // Allow loading html through js
       {
-      test: /\.html$/,
-      use: 'html-loader'
+        test: /\.html$/,
+        use: 'html-loader'
       }
     ]
   };
