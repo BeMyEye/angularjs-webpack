@@ -71,13 +71,18 @@ module.exports = function makeWebpackConfig() {
     config.devtool = 'eval-source-map';
   }
 
+  // Tell Webpack to add either .ts or .js to local import paths
+  // eg. `import { routing } from './core.routes';` will look at a file named core.routes.ts
+  config.resolve = {
+    extensions: ['.ts', '.js']
+  };
+
   /**
    * Loaders
    * Reference: http://webpack.github.io/docs/configuration.html#module-loaders
    * List: http://webpack.github.io/docs/list-of-loaders.html
    * This handles most of the magic responsible for converting modules
    */
-
   // Initialize module
   config.module = {
     rules: [
