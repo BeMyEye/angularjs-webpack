@@ -34,6 +34,7 @@
     ],
     "no-arg": true,
     "no-bitwise": true,
+    "no-consecutive-blank-lines": true,
     "no-console": [
       true,
       "debug",
@@ -66,6 +67,13 @@
       "check-catch",
       "check-else",
       "check-whitespace"
+    ],
+    "ordered-imports": [
+      true,
+      {
+        "import-sources-order": "case-insensitive",
+        "named-imports-order": "case-insensitive"
+      }
     ],
     "prefer-const": true,
     "quotemark": [
@@ -108,40 +116,32 @@
       "check-operator",
       "check-separator",
       "check-type"
-    ],
-    "directive-selector": [
-      true,
-      "attribute",
-      "bme",
-      "camelCase"
-    ],
-    "component-selector": [
-      true,
-      "element",
-      "bme",
-      "kebab-case"
-    ],
-    "use-input-property-decorator": true,
-    "use-output-property-decorator": true,
-    "use-host-property-decorator": true,
-    "no-input-rename": true,
-    "no-output-rename": true,
-    "use-life-cycle-interface": true,
-    "use-pipe-transform-interface": true,
-    "component-class-suffix": [
-      false,
-      "Component",
-      "Page",
-      "Modal"
-    ],
-    "directive-class-suffix": true,
-    "no-consecutive-blank-lines": true,
-    "ordered-imports": [
-      true,
-      {
-        "import-sources-order": "case-insensitive",
-        "named-imports-order": "case-insensitive"
-      }
     ]
+    // "directive-selector": [
+    //   true,
+    //   "attribute",
+    //   "bme",
+    //   "camelCase"
+    // ],
+    // "component-selector": [
+    //   true,
+    //   "element",
+    //   "bme",
+    //   "kebab-case"
+    // ],
+    // "use-input-property-decorator": true,
+    // "use-output-property-decorator": true,
+    // "use-host-property-decorator": true,
+    // "no-input-rename": true,
+    // "no-output-rename": true,
+    // "use-life-cycle-interface": true,
+    // "use-pipe-transform-interface": true,
+    // "component-class-suffix": [
+    //   false,
+    //   "Component",
+    //   "Page",
+    //   "Modal"
+    // ],
+    // "directive-class-suffix": true,
   }
 }

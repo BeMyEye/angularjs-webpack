@@ -6,6 +6,8 @@ const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 
 /**
  * Env
@@ -256,7 +258,9 @@ module.exports = function makeWebpackConfig() {
   config.devServer = {
     contentBase: './src',
     stats: 'minimal',
-    host: '0.0.0.0'
+    host: 'localhost',
+    port: 3012,
+    open: true
   };
 
   return config;
