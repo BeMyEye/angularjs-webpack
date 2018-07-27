@@ -35,7 +35,7 @@
     "awesome-typescript-loader": "^5.2.0",
     "copy-webpack-plugin": "^4.5.2",
     "css-loader": "1.0.0",
-    "extract-text-webpack-plugin": "v4.0.0-beta.0",
+    "mini-css-extract-plugin": "0.4.1",
     "file-loader": "^1.1.11",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
@@ -50,6 +50,7 @@
     "karma-webpack": "v4.0.0-beta.0",
     "node-libs-browser": "^2.1.0",
     "node-sass": "^4.9.2",
+    "optimize-css-assets-webpack-plugin": "5.0.0",
     "null-loader": "^0.1.1",
     "phantomjs-prebuilt": "^2.1.16",
     "postcss-loader": "^2.1.6",
@@ -62,6 +63,9 @@
     "typescript": "^2.9.2",
     "uglifyjs-webpack-plugin": "^1.2.7",
     "webpack": "^4.16.2",
+    "ng-annotate-loader": "^0.6.1",
+    "ng-annotate-patched": "1.7.0",
+    "webpack-bundle-analyzer": "^2.13.1",
     "webpack-cli": "^3.1.0",
     "webpack-dev-server": "^3.1.5"
   }

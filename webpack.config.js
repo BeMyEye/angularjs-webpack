@@ -2,10 +2,9 @@
 
 // Modules
 const webpack = require('webpack');
-const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 
@@ -102,47 +101,27 @@ module.exports = function makeWebpackConfig() {
       }, {
         test: /\.ts$/,
         exclude: [/node_modules/],
-        use: [
+        use: [{
+            loader: 'ng-annotate-loader',
+            options: {
+              ngAnnotate: 'ng-annotate-patched',
+              es6: true,
+              explicitOnly: false
+            }
+          },
           'awesome-typescript-loader'
         ]
       },
-      // SCSS LOADER
+      // SCSS/SaSS/CSS LOADER
       {
-        test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader'],
-          publicPath: '../'
-        }),
-      },
-      // CSS LOADER
-      // Reference: https://github.com/webpack/css-loader
-      // Allow loading css through js
-      //
-      // Reference: https://github.com/postcss/postcss-loader
-      // Postprocess your css with PostCSS plugins
-      {
-        test: /\.css$/,
-        // Reference: https://github.com/webpack/extract-text-webpack-plugin
-        // Extract css files in production builds
-        //
-        // Reference: https://github.com/webpack/style-loader
-        // Use style-loader in development.
-
-        use: isTest ? 'null-loader' : ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [{
-              loader: 'css-loader',
-              query: {
-                sourceMap: true
-              }
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          isProd ? MiniCssExtractPlugin.loader : 'style-loader',
+          'css-loader',
+          'postcss-loader',
+          'sass-loader'
+        ]
             },
-            {
-              loader: 'postcss-loader'
-            }
-          ],
-        })
-      },
       // ASSET LOADER
       // Reference: https://github.com/webpack/file-loader
       // Copy png, jpg, jpeg, gif, svg, woff, woff2, ttf, eot files to output
@@ -188,27 +167,38 @@ module.exports = function makeWebpackConfig() {
   }
 
   /**
-   * PostCSS
-   * Reference: https://github.com/postcss/autoprefixer-core
-   * Add vendor prefixes to your css
-   */
-  // NOTE: This is now handled in the `postcss.config.js`
-  //       webpack2 has some issues, making the config file necessary
-
-  /**
    * Plugins
    * Reference: http://webpack.github.io/docs/configuration.html#plugins
    * List: http://webpack.github.io/docs/list-of-plugins.html
    */
   config.plugins = [
-    new webpack.LoaderOptionsPlugin({
-      test: /\.scss$/i,
-      options: {
-        postcss: {
-          plugins: [autoprefixer]
-        }
+    // Copy angular-i18n locales
+    new CopyWebpackPlugin([{
+        from: './node_modules/angular-i18n/angular-locale_en-gb.js',
+        to: config.output.path + '/angular-i18n'
+      },
+      {
+        from: './node_modules/angular-i18n/angular-locale_fr.js',
+        to: config.output.path + '/angular-i18n'
+      },
+      {
+        from: './node_modules/angular-i18n/angular-locale_it.js',
+        to: config.output.path + '/angular-i18n'
+      },
+      {
+        from: './node_modules/angular-i18n/angular-locale_es.js',
+        to: config.output.path + '/angular-i18n'
+      },
+      {
+        from: './node_modules/angular-i18n/angular-locale_de.js',
+        to: config.output.path + '/angular-i18n'
+      },
+      {
+        from: './node_modules/angular-i18n/angular-locale_cs.js',
+        to: config.output.path + '/angular-i18n'
+      },
       }
-    })
+    // new BundleAnalyzerPlugin()
   ];
 
   // Skip rendering index.html in test mode
@@ -221,13 +211,12 @@ module.exports = function makeWebpackConfig() {
         inject: 'body'
       }),
 
-      // Reference: https://github.com/webpack/extract-text-webpack-plugin
+      // Reference: https://github.com/webpack-contrib/mini-css-extract-plugin
       // Extract css files
       // Disabled when in test mode or not in build mode
-      new ExtractTextPlugin({
-        filename: 'css/[name].css',
-        disable: !isProd,
-        allChunks: true
+      new MiniCssExtractPlugin({
+        filename: isProd ? '[name].[hash].css' : '[name].css',
+        chunkFilename: isProd ? '[id].[hash].css' : '[id].css'
       })
     )
   }
@@ -236,16 +225,32 @@ module.exports = function makeWebpackConfig() {
   // Reference: https://github.com/webpack/docs/wiki/list-of-plugins
   if (isProd) {
     const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+    const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+    config.optimization = {
+      minimizer: [
+        new UglifyJsPlugin({
+          cache: true,
+          parallel: true,
+          sourceMap: true // set to true if you want JS source maps
+        }),
+        new OptimizeCSSAssetsPlugin({
+          cssProcessorOptions: {
+            map: {
+              inline: false // set to false if you want CSS source maps
+            }
+          }
+        })
+      ]
+    };
+
     config.plugins.push(
       // Only emit files when there are no errors
       new webpack.NoEmitOnErrorsPlugin(),
 
-      // Minify all javascript, switch loaders to minimizing mode
-      new UglifyJsPlugin(),
-
       // Copy assets
       new CopyWebpackPlugin([{
-        from: __dirname + '/src/assets'
+        from: __dirname + '/src/assets',
+        to: 'assets'
       }])
     )
   }
